@@ -1,0 +1,50 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Los_Angeles"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    commit-message:
+      prefix: "📦"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automerge"
+    reviewers:
+      - "daedaevibin"
+    assignees:
+      - "daedaevibin"
+    groups:
+      dev-dependencies:
+        patterns:
+          - "*"
+    auto-merge: true
+    versioning-strategy: "auto"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Los_Angeles"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    commit-message:
+      prefix: "👷"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automerge"
+    reviewers:
+      - "daedaevibin"
+    assignees:
+      - "daedaevibin"
+    auto-merge: true

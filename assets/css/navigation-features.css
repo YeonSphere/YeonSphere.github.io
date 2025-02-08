@@ -1,0 +1,257 @@
+/**
+ * Navigation Features Stylesheet
+ * Author: daedaevibin
+ * Last Modified: 2025-02-08 02:24:23 UTC
+ */
+
+/* Core Variables */
+:root {
+    --nav-primary: var(--deep-purple);
+    --nav-secondary: var(--fuchsia);
+    --nav-accent: var(--gold);
+    --nav-bg: rgba(26, 26, 26, 0.95);
+    --nav-text: var(--text-color);
+    --button-size: 50px;
+    --button-size-mobile: 45px;
+    --indicator-size: 12px;
+    --spacing: 20px;
+    --anim-duration: 0.3s;
+}
+
+/* Floating Scroll Button */
+.floating-scroll-btn {
+    position: fixed;
+    right: var(--spacing);
+    bottom: var(--spacing);
+    width: var(--button-size);
+    height: var(--button-size);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--nav-primary), var(--nav-secondary));
+    border: none;
+    color: var(--nav-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--anim-duration) ease;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-scroll-btn.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.floating-scroll-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
+}
+
+.floating-scroll-btn:active {
+    transform: scale(0.95);
+}
+
+.floating-scroll-btn.scroll-up i {
+    transform: rotate(180deg);
+}
+
+/* Section Indicators */
+.section-indicators {
+    position: fixed;
+    right: var(--spacing);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+    padding: 10px;
+    background: var(--nav-bg);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.section-indicator {
+    width: var(--indicator-size);
+    height: var(--indicator-size);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all var(--anim-duration) ease;
+    position: relative;
+}
+
+.section-indicator::before {
+    content: attr(title);
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, var(--nav-primary), var(--nav-secondary));
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--nav-text);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--anim-duration) ease;
+    white-space: nowrap;
+}
+
+.section-indicator:hover::before {
+    opacity: 1;
+}
+
+.section-indicator.active {
+    background: var(--nav-accent);
+    box-shadow: 0 0 10px var(--nav-accent);
+}
+
+/* Pull-to-refresh Indicator */
+.pull-refresh-indicator {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    background: linear-gradient(135deg, var(--nav-primary), var(--nav-secondary));
+    padding: 15px 25px;
+    border-radius: 0 0 25px 25px;
+    color: var(--nav-text);
+    z-index: 1001;
+    transition: all var(--anim-duration) ease;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pull-refresh-indicator i {
+    transition: transform var(--anim-duration) ease;
+}
+
+.pull-refresh-indicator.ready i {
+    transform: rotate(180deg);
+}
+
+.pull-refresh-indicator.refreshing i {
+    animation: spin 1s linear infinite;
+}
+
+/* Scroll Snap */
+.container {
+    scroll-snap-type: y proximity;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+/* Horizontal Scroll */
+.horizontal-scroll-container {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--nav-primary), var(--nav-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--nav-text);
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all var(--anim-duration) ease;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-indicator.prev {
+    left: 10px;
+}
+
+.scroll-indicator.next {
+    right: 10px;
+}
+
+/* Animations */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    :root {
+        --spacing: 15px;
+    }
+
+    .floating-scroll-btn {
+        width: var(--button-size-mobile);
+        height: var(--button-size-mobile);
+    }
+    
+    .section-indicators {
+        padding: 8px;
+    }
+    
+    .scroll-indicator {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Improved Touch Targets */
+    .nav-links a,
+    .project-card,
+    .social-links a {
+        min-height: 44px;
+        padding: 12px;
+    }
+    
+    .nav-links {
+        gap: 20px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    .floating-scroll-btn,
+    .section-indicator,
+    .scroll-indicator {
+        border: 2px solid var(--nav-text);
+    }
+}

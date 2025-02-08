@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Start local server
+      run: npm run start & sleep 5
+      
+    - name: Run accessibility tests
+      run: npm run test:accessibility
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Audit with Lighthouse
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        urls: |
+          https://yeonsphere.github.io/
+          https://yeonsphere.github.io/about.html
+          https://yeonsphere.github.io/projects.html
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+        
+  html5-validator:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Validate HTML
+      uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+      with:
+        root: .
+        format: text
+        log_level: INFO
+        extra: --show-warnings

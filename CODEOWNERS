@@ -1,0 +1,19 @@
+# Global owners
+* @daedaevibin
+
+# Website specific files
+*.html @daedaevibin
+*.css @daedaevibin
+*.js @daedaevibin
+
+# Documentation
+/docs/ @daedaevibin
+*.md @daedaevibin
+
+# GitHub Actions workflows
+/.github/workflows/ @daedaevibin
+/.github/dependabot.yml @daedaevibin
+
+# Security and configuration
+/.github/SECURITY.md @daedaevibin
+/.github/CODEOWNERS @daedaevibin
