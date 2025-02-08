@@ -60,7 +60,13 @@ header {
     z-index: 1000;
     border-bottom: 2px solid var(--purple);
     backdrop-filter: blur(10px);
-}
+    
+    display: flex; /* Enables Flexbox layout */
+    justify-content: space-between; /* Align items to the left and right */
+    align-items: center; /* Vertically center items */
+    padding-left: 1rem; /* Optional: Ensure there's a left margin */
+    padding-right: 1rem; /* Optional: Ensure there's a right margin */
+  }
 
 nav {
     display: flex;
