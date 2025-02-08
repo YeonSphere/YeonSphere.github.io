@@ -64,8 +64,8 @@ header {
     display: flex; /* Enables Flexbox layout */
     justify-content: space-between; /* Align items to the left and right */
     align-items: center; /* Vertically center items */
-    padding-left: 1rem; /* Optional: Ensure there's a left margin */
-    padding-right: 1rem; /* Optional: Ensure there's a right margin */
+    padding-left: 0; /* Removed left padding */
+    padding-right: 0; /* Removed right padding */
   }
 
 nav {
